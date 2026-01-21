@@ -1,0 +1,21 @@
+name: docker-ci-pipeline
+on: push
+jobs:
+  sysfooci-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v6
+      - name: Build Image
+        run: docker build -t ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python:v1 .
+      - name: verify name
+        run: docker images
+      - name: Docker login
+        uses: docker/login-action@3.6.0
+        with:
+          username:${{ vars.DOCKER_USERNAME }}
+          password:${{ secrets.DOCKER_TOKEN }}
+      - name: Push Image
+        run: docker push ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python:v1 
+
+          
