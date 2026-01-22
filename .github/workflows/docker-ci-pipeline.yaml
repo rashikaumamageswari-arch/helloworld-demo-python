@@ -15,6 +15,18 @@ jobs:
         
       - name: verify image
         run: docker images
+        
+      - name: create container
+        run: docker run --name pythonapp -itd -p 8080:8080 ${{ vars.DOCKERDEMO1 }}/rashi_docker_image:v1
+ 
+      - name: sleep 20
+        run: sleep 20
+ 
+      - name: view containter
+        run: docker ps
+ 
+      - name: check output
+        run: curl -f http://localhost:8080
  
       - name: Docker Login
         uses: docker/login-action@v3.6.0
@@ -24,6 +36,9 @@ jobs:
  
       - name: push image
         run: docker push ${{ vars.DOCKERDEMO1 }}/rashi_docker_image:v1
+
+      - name: container cleanup
+        run: docker rm -f pythonapp
  
     
 
