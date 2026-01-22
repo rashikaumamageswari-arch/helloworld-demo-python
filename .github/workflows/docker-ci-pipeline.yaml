@@ -1,7 +1,12 @@
 name: docker-ci-pipeline
  
-on: push
- 
+on:
+ push:
+   paths-ignore:
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+  
 jobs:
   dockerci-job:
  
