@@ -1,26 +1,30 @@
 name: docker-ci-pipeline
+ 
 on: push
+ 
 jobs:
   dockerci-job:
+ 
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
         uses: actions/checkout@v6
+ 
+      - name: Build image
+        run: docker build -t ${{ vars.DOCKERDEMO1 }}/rashi_docker_image:v1 .
         
-      - name: Build Image
-        run: docker build -t ${{ vars.DOCKERDEMO1 }}/helloworld-demo-python:v1 .
-        
-      - name: verify name
+      - name: verify image
         run: docker images
-        
-      - name: Docker login
+ 
+      - name: Docker Login
         uses: docker/login-action@v3.6.0
-        
         with:
-          username:${{ vars.DOCKERDEMO1 }}
-          password:${{ secrets.DOCKER_TOKEN }}
-          
-      - name: Push Image
-        run: docker push ${{ vars.DOCKERDEMO1 }}/helloworld-demo-python:v1 
+          username: ${{ vars.DOCKERDEMO1 }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+ 
+      - name: push image
+        run: docker push ${{ vars.DOCKERDEMO1 }}/rashi_docker_image:v1
+ 
+    
 
-          
+        
