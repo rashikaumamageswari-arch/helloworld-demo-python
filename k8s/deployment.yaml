@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rashideployment
+  nameapce: python-app
+  labels:
+    app: rashihelloworld
+    name: rashika
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rashihelloworld
+      name: rashika
+  template:
+    metadata:
+      labels:
+        app: rashihelloworld
+        name: rashika
+    spec:
+      containers:
+      - name: rashihelloworld
+        image: rashidemo/rashi_docker_image:v1
